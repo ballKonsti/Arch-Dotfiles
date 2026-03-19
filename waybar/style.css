@@ -8,7 +8,7 @@ window#waybar {
     background-color: rgba(30, 30, 46, 0.9);
     color: #cdd6f4;
     transition-property: background-color;
-    transition-duration: 0.5s;
+    transition-duration: 0.1s;
 }
 
 #workspaces button {
@@ -37,7 +37,7 @@ window#waybar {
 }
 
 #clock {
-    color: #89dceb;
+    color: #c1121f;
 }
 
 #battery {
