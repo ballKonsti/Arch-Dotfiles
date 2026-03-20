@@ -2,6 +2,7 @@
     font-family: "JetBrainsMono Nerd Font", monospace;
     font-size: 13px;
     font-weight: bold;
+
 }
 
 window#waybar {
@@ -9,6 +10,7 @@ window#waybar {
     color: #cdd6f4;
     transition-property: background-color;
     transition-duration: 0.1s;
+
 }
 
 #workspaces button {

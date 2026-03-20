@@ -1,8 +1,9 @@
 {
-  "layer": "bottom",
+  "layer": "top",
+  "exclusive":false,
   "position": "bottom",
   "height": 30,
-
+	"width":300,
   "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": ["pulseaudio", "network", "battery", "tray"],
