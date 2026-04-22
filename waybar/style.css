@@ -2,14 +2,20 @@
     font-family: "JetBrainsMono Nerd Font", monospace;
     font-size: 13px;
     font-weight: bold;
+    }
 
+window{
+margin-left:200px;
 }
 
 window#waybar {
-    background-color: rgba(30, 30, 46, 0.9);
+    background-color: #FAE6FA;
     color: #cdd6f4;
     transition-property: background-color;
     transition-duration: 0.1s;
+	border-bottom-left-radius:20px;
+	border-bottom-right-radius:20px;
+
 
 }
 
@@ -21,7 +27,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: #89b4fa;
+    color: #32174D;
 }
 
 #workspaces button:hover {
@@ -39,43 +45,43 @@ window#waybar {
 }
 
 #clock {
-    color: #c1121f;
+    color: #32174D;
 }
 
 #battery {
-    color: #a6e3a1;
+    color: #32174D;
 }
 
 #battery.charging {
-    color: #a6e3a1;
+    color: #32174D;
 }
 
 #battery.warning:not(.charging) {
-    color: #fab387;
+    color: #32174D;
 }
 
 #battery.critical:not(.charging) {
-    color: #f38ba8;
+    color: #32174D;
 }
 
 #pulseaudio {
-    color: #cba6f7;
+    color: #32174D;
 }
 
 #pulseaudio.muted {
-    color: #6c7086;
+    color: #32174D;
 }
 
 #network {
-    color: #f9e2af;
+    color: #32174D;
 }
 
 #network.disconnected {
-    color: #6c7086;
+    color: #32174D;
 }
 
 #tray {
-    color: #cdd6f4;
+    color: #32174D;
 }
 
 #tray > .passive {
@@ -83,5 +89,5 @@ window#waybar {
 }
 
 #tray > .needs-attention {
-    color: #f38ba8;
+    color: #32174D;
 }
