@@ -1,0 +1,284 @@
+{
+  "name": "Cipher Hybrid",
+  "appearance": "dark",
+  
+  "colors": {
+    // ============================================
+    // EDITOR CORE - BALANCED TRANSPARENCY
+    // ============================================
+    "editor.background": "#0a0e15",
+    "editor.foreground": "#d4d4d4",
+    "editor.gutter.background": "#0a0e15",
+    "editor.line_number": "#3e4451",
+    "editor.active_line_number": "#6c7086",
+    "editor.wrap_guide": "#1a1f2e",
+    "editor.active_wrap_guide": "#2d3748",
+    "editor.whitespace": "#3e445144",
+    
+    // ============================================
+    // SELECTION & HIGHLIGHTS
+    // ============================================
+    "editor.selection.background": "#2d1b4e88",
+    "editor.selection.foreground": "#e8e8e8",
+    "editor.line_highlight": "#1a1f2e44",
+    "editor.document_highlight.read_background": "#2d1b4e55",
+    "editor.document_highlight.write_background": "#3d2d4d55",
+    "editor.find_match_background": "#3d2d4d88",
+    "editor.find_match_highlight_background": "#3d2d4d55",
+    "editor.find_match_border": "#6b5b95ff",
+    
+    // ============================================
+    // CURSOR & SEARCH
+    // ============================================
+    "editor.cursor": "#8b7ab8",
+    "editor.search.match_background": "#3d2d4d77",
+    "editor.search.selected_match_background": "#5d3d6dff",
+    "editor.search.match_border": "#7b5b99ff",
+    
+    // ============================================
+    // UI BACKGROUNDS
+    // ============================================
+    "background": "#0a0e15",
+    "foreground": "#d4d4d4",
+    "panel.background": "#0f131999",
+    "panel.border": "#1f2535ff",
+    
+    // ============================================
+    // SIDEBAR
+    // ============================================
+    "sidebar.background": "#0f1319bb",
+    "sidebar.foreground": "#c4c4c4",
+    "sidebar.border": "#1f2535ff",
+    "sidebar.selected_icon_color": "#8b7ab8",
+    "sidebar.drop_target.background": "#3d2d4d55",
+    
+    // ============================================
+    // TAB BAR
+    // ============================================
+    "tab_bar.background": "#0a0e15ff",
+    "tab_bar.border": "#1f2535ff",
+    "tab.active_background": "#1a1f2edd",
+    "tab.active_foreground": "#e8e8e8",
+    "tab.active_border": "#6b5b95ff",
+    "tab.inactive_background": "#0a0e1577",
+    "tab.inactive_foreground": "#7a7a8a",
+    "tab.inactive_border": "#1f253511",
+    "tab.hover_background": "#1f2535dd",
+    
+    // ============================================
+    // STATUS BAR
+    // ============================================
+    "status_bar.background": "#0f131999",
+    "status_bar.foreground": "#a8a8b8",
+    "status_bar.border": "#1f2535ff",
+    
+    // ============================================
+    // TERMINAL
+    // ============================================
+    "terminal.ansi.black": "#1a1f2e",
+    "terminal.ansi.red": "#e07b8a",
+    "terminal.ansi.green": "#7eb5a8",
+    "terminal.ansi.yellow": "#d4b896",
+    "terminal.ansi.blue": "#7b9bc8",
+    "terminal.ansi.magenta": "#a885d4",
+    "terminal.ansi.cyan": "#7eb5c4",
+    "terminal.ansi.white": "#d4d4d4",
+    "terminal.ansi.bright_black": "#3e4451",
+    "terminal.ansi.bright_red": "#ff8899",
+    "terminal.ansi.bright_green": "#8fc4b8",
+    "terminal.ansi.bright_yellow": "#e4c4a6",
+    "terminal.ansi.bright_blue": "#8badde",
+    "terminal.ansi.bright_magenta": "#b89fe4",
+    "terminal.ansi.bright_cyan": "#8ec4d4",
+    "terminal.ansi.bright_white": "#ffffff",
+    
+    // ============================================
+    // SYNTAX COLORS
+    // ============================================
+    "syntax": {
+      "comment": {
+        "color": "#4a5568aa",
+        "font_style": "italic"
+      },
+      "string": {
+        "color": "#7eb5a8"
+      },
+      "string.escape": {
+        "color": "#d4b896"
+      },
+      "number": {
+        "color": "#d4b896"
+      },
+      "boolean": {
+        "color": "#a885d4"
+      },
+      "keyword": {
+        "color": "#8b7ab8",
+        "font_style": "bold"
+      },
+      "operator": {
+        "color": "#c4a8d8"
+      },
+      "function": {
+        "color": "#7b9bc8"
+      },
+      "method": {
+        "color": "#7b9bc8"
+      },
+      "type": {
+        "color": "#7eb5c4"
+      },
+      "variable": {
+        "color": "#d4d4d4"
+      },
+      "property": {
+        "color": "#8badde"
+      },
+      "attribute": {
+        "color": "#7eb5a8"
+      },
+      "tag": {
+        "color": "#8b7ab8"
+      },
+      "tag.name": {
+        "color": "#8b7ab8"
+      },
+      "tag.attribute": {
+        "color": "#7b9bc8"
+      },
+      "tag.delimiter": {
+        "color": "#c4a8d8"
+      },
+      "punctuation": {
+        "color": "#8a9aaa"
+      },
+      "punctuation.bracket": {
+        "color": "#c4a8d8"
+      },
+      "punctuation.delimiter": {
+        "color": "#8a9aaa"
+      }
+    },
+    
+    // ============================================
+    // GIT / DIFF
+    // ============================================
+    "git.created": "#7eb5a8",
+    "git.deleted": "#e07b8a",
+    "git.modified": "#d4b896",
+    "git.conflict": "#ff8899",
+    "git.ignored": "#4a5568",
+    
+    // ============================================
+    // DIAGNOSTICS
+    // ============================================
+    "diagnostic.error.color": "#ff8899",
+    "diagnostic.warning.color": "#d4b896",
+    "diagnostic.information.color": "#7b9bc8",
+    "diagnostic.hint.color": "#7eb5a8",
+    
+    // ============================================
+    // UI ELEMENTS
+    // ============================================
+    "button.background": "#3d2d4ddd",
+    "button.foreground": "#e8e8e8",
+    "button.hover.background": "#5d3d6dff",
+    "button.border": "#6b5b95ff",
+    "input.background": "#0f131955",
+    "input.border": "#3d2d4dbb",
+    "input.foreground": "#e8e8e8",
+    "input.placeholder_foreground": "#5a5a6a",
+    "input.focus_border": "#8b7ab8ff",
+    
+    // ============================================
+    // SCROLLBAR
+    // ============================================
+    "scrollbar.thumb.background": "#3e445188",
+    "scrollbar.thumb.hover_background": "#5a5a7aaa",
+    "scrollbar.thumb.border": "#3d2d4d55",
+    "scrollbar.track.background": "#0a0e1544",
+    
+    // ============================================
+    // BREADCRUMB
+    // ============================================
+    "breadcrumb.background": "#0a0e1566",
+    "breadcrumb.foreground": "#8a9aaa",
+    "breadcrumb.active_foreground": "#8b7ab8",
+    "breadcrumb.disabled_foreground": "#4a5568",
+    
+    // ============================================
+    // DROPDOWNS & MENUS
+    // ============================================
+    "dropdown.background": "#0f1319bb",
+    "dropdown.border": "#3d2d4dbb",
+    "dropdown.foreground": "#d4d4d4",
+    "menu.background": "#0f1319bb",
+    "menu.border": "#3d2d4dbb",
+    "menu.foreground": "#d4d4d4",
+    "menu.selectionBackground": "#3d2d4dff",
+    "menu.selectionForeground": "#e8e8e8",
+    
+    // ============================================
+    // CODE LENS & DECORATIONS
+    // ============================================
+    "editorCodeLens.foreground": "#5a5a6a",
+    "editorInlayHint.background": "#3d2d4d44",
+    "editorInlayHint.foreground": "#8a9aaa",
+    "editorInlayHint.typeForeground": "#7b9bc8",
+    "editorInlayHint.parameterForeground": "#d4b896",
+    
+    // ============================================
+    // BRACKETS & MATCHING
+    // ============================================
+    "editorBracketMatch.background": "#3d2d4d88",
+    "editorBracketMatch.border": "#8b7ab8ff",
+    "editorBracketPairGuide.background1": "#3e445122",
+    "editorBracketPairGuide.background2": "#5a5a7a22",
+    "editorBracketPairGuide.background3": "#7b5b9522",
+    
+    // ============================================
+    // HOVER & PEEK
+    // ============================================
+    "editorHoverWidget.background": "#0f131999",
+    "editorHoverWidget.border": "#3d2d4dbb",
+    "editorHoverWidget.foreground": "#d4d4d4",
+    "peekView.border": "#3d2d4dbb",
+    "peekViewTitle.background": "#1f253566",
+    "peekViewTitleDescription.foreground": "#8a9aaa",
+    "peekViewTitleLabel.foreground": "#8b7ab8",
+    "peekViewEditor.background": "#0a0e1566",
+    "peekViewEditorGutter.background": "#0f131955",
+    "peekViewResult.background": "#0a0e1566",
+    "peekViewResult.fileForeground": "#d4d4d4",
+    "peekViewResult.lineForeground": "#8a9aaa",
+    "peekViewResult.matchHighlightBackground": "#3d2d4d88",
+    "peekViewResult.selectionBackground": "#3d2d4dff",
+    "peekViewResult.selectionForeground": "#e8e8e8",
+    
+    // ============================================
+    // BADGES & NOTIFICATIONS
+    // ============================================
+    "badge.background": "#3d2d4dff",
+    "badge.foreground": "#e8e8e8",
+    "notification.background": "#1a1f2edd",
+    "notification.border": "#3d2d4dbb",
+    "notificationCenter.border": "#3d2d4dbb",
+    
+    // ============================================
+    // DIFF & MERGE
+    // ============================================
+    "diffEditor.border": "#3d2d4dbb",
+    "diffEditor.insertedTextBackground": "#7eb5a844",
+    "diffEditor.insertedLineBackground": "#7eb5a814",
+    "diffEditor.removedTextBackground": "#e07b8a44",
+    "diffEditor.removedLineBackground": "#e07b8a14",
+    "diffEditor.unchangedRegionBackground": "#3e445122",
+    "diffEditorGutter.insertedLineBackground": "#7eb5a844",
+    "diffEditorGutter.removedLineBackground": "#e07b8a44",
+    
+    // ============================================
+    // PROGRESS BAR
+    // ============================================
+    "progressBar.background": "#8b7ab8ff"
+  }
+}

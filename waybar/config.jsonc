@@ -19,28 +19,9 @@
     "separate-outputs": true,
   },
 
-  "clock": {
-    "format": "{:%H:%M}",
-    "format-alt": "}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "calendar": {
-      "mode": "month",
-      "format": {
-        "months": "<span color='#ffead3'><b>{}</b></span>",
-        "days": "<span color='#ecc6d9'>{}</span>",
-        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
-      },
-    },
-  },
 
-  "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": "󰝟",
-    "format-icons": {
-      "default": ["", "", ""],
-    },
-    "on-click": "pavucontrol",
-  },
+
+
 
   "network": {
     "format-wifi": " {signalStrength}%",
@@ -60,8 +41,5 @@
     "format-icons": ["", "", "", "", ""],
   },
 
-  "tray": {
-    "icon-size": 16,
-    "spacing": 10,
-  },
+
 }

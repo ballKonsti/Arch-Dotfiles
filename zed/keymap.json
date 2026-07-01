@@ -1,0 +1,13 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-q": "workspace::Save"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-o ctrl-l": "window::MergeAllWindows"
+    }
+  }
+]
