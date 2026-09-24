@@ -18,9 +18,9 @@ with [Quickshell](https://quickshell.org).
 | [`dunst/`](dunst) | Notifications, styled to match the notch. |
 | [`kitty/`](kitty) | Terminal. |
 | [`zed/`](zed) | Zed editor — settings, keymap, and a set of themes. |
+| [`nvim/`](nvim) | Neovim — transparent, Python-oriented. See its [README](nvim/README.md). |
 | [`btop/`](btop) | System monitor. |
 | [`fastfetch/`](fastfetch) | Fetch, with custom ASCII. |
-| [`waybar/`](waybar) | The previous bar. Kept as a fallback; nothing launches it any more. |
 | `shortcuts.txt` | Scratch notes on keybinds. |
 
 ## The notch
@@ -61,7 +61,7 @@ up.
 git clone git@github.com:ballKonsti/Arch-Dotfiles.git ~/hyprland-setup
 cd ~/hyprland-setup
 
-for d in btop dunst fastfetch hypr kitty quickshell waybar zed; do
+for d in btop dunst fastfetch hypr kitty nvim quickshell zed; do
     [ -e ~/.config/"$d" ] && mv ~/.config/"$d" ~/.config/"$d".bak
     ln -s "$PWD/$d" ~/.config/"$d"
 done
@@ -75,8 +75,13 @@ Then log out and back into Hyprland, or `hyprctl reload`.
 sudo pacman -S --needed hyprland quickshell dunst kitty btop fastfetch \
     pipewire pipewire-pulse wireplumber networkmanager upower \
     brightnessctl playerctl grim slurp wl-clipboard \
-    inter-font ttf-jetbrains-mono-nerd
+    inter-font ttf-jetbrains-mono-nerd \
+    neovim ripgrep fd tree-sitter-cli imagemagick
 ```
+
+The last line is for the editor and the theme switcher: `ripgrep`/`fd` back
+Telescope, `tree-sitter-cli` builds Neovim's parsers, and `imagemagick` is
+what reads a wallpaper's dominant colour.
 
 `quickshell` is in `extra` — no AUR build needed. `inter-font` is the notch's
 UI typeface and `ttf-jetbrains-mono-nerd` supplies its glyphs; without them Qt
@@ -89,6 +94,9 @@ falls back and the icons render as boxes.
 | Bind | Action |
 | --- | --- |
 | <kbd>Super</kbd> + <kbd>W</kbd> | Toggle the notch (waves in / out) |
+| <kbd>Super</kbd> + <kbd>T</kbd> | Theme picker — wallpaper + shell colours |
+| <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd> | Next theme |
+| <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> | Toggle dark / light |
 | <kbd>Super</kbd> + <kbd>I</kbd> | Terminal |
 | <kbd>Super</kbd> + <kbd>Q</kbd> | Close window |
 | <kbd>Super</kbd> + <kbd>E</kbd> | File manager (yazi) |

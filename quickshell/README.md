@@ -1,8 +1,7 @@
 # Notch bar
 
 A MacBook-notch / Dynamic-Island style top bar for Hyprland, built with
-[Quickshell](https://quickshell.org). Replaces the old waybar setup
-(`~/.config/waybar` is left in place but nothing launches it any more).
+[Quickshell](https://quickshell.org).
 
 ## Running
 

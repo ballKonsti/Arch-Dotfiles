@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Effects
 import Quickshell
-import Quickshell.Io
 import Quickshell.Services.Mpris
 import qs.config
 import qs.services
@@ -146,33 +145,11 @@ Item {
         }
     }
 
-    IpcHandler {
-        target: "notch"
-
-        // Super+W — waves in if hidden, waves out if shown
-        function toggle(): void {
-            if (root.shown)
-                root.playOutro();
-            else
-                root.playIntro();
-        }
-
-        function replay(): void {
-            root.playIntro();
-        }
-
-        function hide(): void {
-            root.playOutro();
-        }
-
-        function open(): void {
-            root.pinned = true;
-        }
-
-        function close(): void {
-            root.pinned = false;
-        }
-    }
+    // The "notch" IPC target is owned by NotchState, which fans calls like
+    // Super+W's toggle out to every monitor's Notch — an IpcHandler here
+    // would collide with the other monitors' since targets are global.
+    Component.onCompleted: NotchState.register(root)
+    Component.onDestruction: NotchState.unregister(root)
 
     // OSD: 0 = none, 1 = volume, 2 = brightness
     property int osd: 0
@@ -543,24 +520,14 @@ Item {
                                 radius: 1.25
                                 color: Theme.accent
                                 anchors.verticalCenter: parent.verticalCenter
-                                height: 4
+                                // Real audio levels when playing; a resting
+                                // sliver otherwise (no more decorative loop).
+                                height: root.playing && mediaRow.visible ? Math.max(4, 4 + Cava.levels[index] * 0.08) : 4
 
-                                SequentialAnimation on height {
-                                    running: root.playing && mediaRow.visible
-                                    loops: Animation.Infinite
-
-                                    PauseAnimation {
-                                        duration: index * 130
-                                    }
+                                Behavior on height {
                                     NumberAnimation {
-                                        to: 12
-                                        duration: 380
-                                        easing.type: Easing.InOutSine
-                                    }
-                                    NumberAnimation {
-                                        to: 4
-                                        duration: 380
-                                        easing.type: Easing.InOutSine
+                                        duration: Theme.durFast
+                                        easing.type: Easing.OutCubic
                                     }
                                 }
                             }

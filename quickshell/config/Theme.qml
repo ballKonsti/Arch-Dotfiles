@@ -2,8 +2,11 @@ pragma Singleton
 
 import Quickshell
 import QtQuick
+import qs.config
 
 Singleton {
+    id: root
+
     // ── Geometry ────────────────────────────────────────────────
     readonly property int barHeight: 34          // reserved strip at the top
     readonly property int notchWidth: 400
@@ -22,23 +25,114 @@ Singleton {
     readonly property real waveWobble: 0.3       // how much the crest swells as it runs
     readonly property int waveRipples: 3         // half-cycles of swell over the crossing
 
-    // ── Palette (warm dark, carried over from the old waybar) ───
-    readonly property color notchBg: "#000000"
-    readonly property color surface: "#16130f"
-    readonly property color surfaceHi: "#231f19"
-    readonly property color stroke: "#1affffff"
-    readonly property color strokeSoft: "#0dffffff"
+    // ── Palette ─────────────────────────────────────────────────
+    // Derived from the current wallpaper by ThemeState. Not readonly, because
+    // the Behaviors below need to intercept the writes — they are what makes a
+    // theme switch cross-fade instead of snap. Everything downstream still
+    // just reads Theme.text, Theme.accent and friends.
+    property color notchBg: ThemeState.palette.notchBg
+    property color surface: ThemeState.palette.surface
+    property color surfaceHi: ThemeState.palette.surfaceHi
+    property color stroke: ThemeState.palette.stroke
+    property color strokeSoft: ThemeState.palette.strokeSoft
 
-    readonly property color text: "#ece6dd"
-    readonly property color subtext: "#9b9186"
-    readonly property color faint: "#5e574f"
+    property color text: ThemeState.palette.text
+    property color subtext: ThemeState.palette.subtext
+    property color faint: ThemeState.palette.faint
 
-    readonly property color accent: "#ffe5ec"     // soft pink
-    readonly property color accent2: "#caf0f8"    // ice blue
-    readonly property color warm: "#e0b189"
-    readonly property color good: "#a7d3a0"
-    readonly property color warn: "#e0a458"
-    readonly property color crit: "#e05c5c"
+    property color accent: ThemeState.palette.accent
+    property color accent2: ThemeState.palette.accent2
+    property color warm: ThemeState.palette.warm
+    property color good: ThemeState.palette.good
+    property color warn: ThemeState.palette.warn
+    property color crit: ThemeState.palette.crit
+
+    readonly property int durRecolour: 520
+
+    Behavior on notchBg {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on surface {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on surfaceHi {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on stroke {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on strokeSoft {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on text {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on subtext {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on faint {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on accent {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on accent2 {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on warm {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on good {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on warn {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on crit {
+        ColorAnimation {
+            duration: root.durRecolour
+            easing.type: Easing.OutCubic
+        }
+    }
 
     // ── Type ────────────────────────────────────────────────────
     readonly property string fontUI: "Inter"
