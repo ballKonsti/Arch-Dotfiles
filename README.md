@@ -89,7 +89,7 @@ falls back and the icons render as boxes.
 
 ## Keybinds
 
-`$mainMod` is <kbd>Super</kbd>.
+`mainMod` is <kbd>Super</kbd>.
 
 | Bind | Action |
 | --- | --- |
@@ -115,4 +115,4 @@ falls back and the icons render as boxes.
 Media and brightness keys are bound to `wpctl`, `brightnessctl` and
 `playerctl`; the notch shows an OSD for each.
 
-The full list lives in [`hypr/hyprland.conf`](hypr/hyprland.conf).
+The full list lives in [`hypr/binds.lua`](hypr/binds.lua). The Hyprland config is Lua (`hypr/hyprland.lua` requires one module per area); `hyprlock.conf` stays in hyprlang because hyprlock has no Lua config.

@@ -1,0 +1,62 @@
+hl.config({
+    general = {
+        gaps_in  = 1,
+        gaps_out = 0,
+
+        border_size = 1,
+
+        -- https://wiki.hypr.land/Configuring/Variables/#variable-types for info about colors
+        col = {
+            active_border   = { colors = {"rgba(595959aa)", "rgba(999999ff)"}, angle = 45 },
+            inactive_border = "rgba(595959aa)",
+        },
+
+        -- Set to true enable resizing windows by clicking and dragging on borders and gaps
+        resize_on_border = true,
+
+        -- Please see https://wiki.hypr.land/Configuring/Tearing/ before you turn this on
+        allow_tearing = true,
+
+        layout = "dwindle",
+    },
+
+    -- https://wiki.hypr.land/Configuring/Variables/#decoration
+    decoration = {
+        rounding       = 10,
+        rounding_power = 2,
+
+        -- Change transparency of focused and unfocused windows
+        active_opacity   = 1,
+        inactive_opacity = 0.7,
+
+        shadow = {
+            enabled      = false,
+            range        = 4,
+            render_power = 3,
+            color        = 0xee1a1a1a,
+        },
+
+        -- https://wiki.hypr.land/Configuring/Variables/#blur
+        blur = {
+            enabled  = true,
+            size     = 1,
+            passes   = 1,
+            vibrancy = 0.1696,
+        },
+    },
+
+    dwindle = {
+        preserve_split = true,
+    },
+
+    -- See https://wiki.hypr.land/Configuring/Master-Layout/ for more
+    master = {
+        new_status = "master",
+    },
+
+    -- https://wiki.hypr.land/Configuring/Variables/#misc
+    misc = {
+        force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
+        disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+    },
+})
