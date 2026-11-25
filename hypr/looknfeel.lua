@@ -15,7 +15,7 @@ hl.config({
         resize_on_border = true,
 
         -- Please see https://wiki.hypr.land/Configuring/Tearing/ before you turn this on
-        allow_tearing = true,
+        allow_tearing = false,
 
         layout = "dwindle",
     },
@@ -58,5 +58,12 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+    },
+
+    -- Fix ~3s black screen when entering/leaving fullscreen (browser video etc.):
+    -- both options make the eDP panel modeset on fullscreen toggle.
+    render = {
+        cm_auto_hdr       = 0,
+        send_content_type = false,
     },
 })

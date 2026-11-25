@@ -1,0 +1,170 @@
+/* ╔══════════════════════════════════════════════════════════╗
+   ║   Walker — "Rolling Hills" Theme                         ║
+   ║   ~/.config/walker/themes/hills/style.css                ║
+   ║   GTK4 selectors based on Walker's actual widget tree    ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+/* ── Variables ────────────────────────────────────────────── */
+* {
+    --bg: #0d1a0b;
+    --bg-entry: #111f0e;
+    --bg-hover: #1e3d18;
+    --bg-active: #2d5c23;
+    --border: rgba(80, 160, 55, 0.25);
+    --border-hi: rgba(122, 210, 70, 0.55);
+    --text: #d4f0c0;
+    --text-sub: #7ab86a;
+    --text-dim: #3d6b32;
+    --accent: #7adb3c;
+
+    color: var(--text);
+    font-family: "JetBrains Mono", "Noto Sans", monospace;
+    font-size: 13px;
+}
+
+/* ── Window ───────────────────────────────────────────────── */
+window {
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+/* ── Search entry ─────────────────────────────────────────── */
+entry {
+    background-color: var(--bg-entry);
+    color: var(--text);
+    border: none;
+    border-bottom: 1px solid var(--border);
+    border-radius: 12px 12px 0 0;
+    padding: 12px 16px;
+    font-size: 14px;
+    caret-color: var(--accent);
+    box-shadow: none;
+}
+
+entry:focus {
+    outline: none;
+    border-bottom: 1px solid var(--border-hi);
+    box-shadow: none;
+}
+
+/* hide entry focus ring that GTK4 adds */
+entry > *:focus {
+    outline: none;
+}
+
+/* placeholder text */
+entry placeholder {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+/* ── List / Scrolled area ─────────────────────────────────── */
+scrolledwindow {
+    background-color: transparent;
+}
+
+listview,
+list {
+    background-color: transparent;
+    padding: 6px;
+}
+
+/* ── Rows ─────────────────────────────────────────────────── */
+row {
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 2px 4px;
+    margin: 1px 2px;
+    transition: background-color 100ms ease;
+}
+
+row:hover {
+    background-color: var(--bg-hover);
+}
+
+row:selected,
+row:focus {
+    background-color: var(--bg-active);
+    outline: none;
+    box-shadow: inset 0 0 0 1px rgba(122, 219, 60, 0.3);
+}
+
+/* ── Item box inside rows ─────────────────────────────────── */
+row box {
+    padding: 8px 10px;
+    spacing: 10px;
+}
+
+/* ── Icon ─────────────────────────────────────────────────── */
+row image {
+    -gtk-icon-size: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    border-radius: 6px;
+}
+
+/* ── Labels ───────────────────────────────────────────────── */
+row label {
+    color: var(--text);
+}
+
+/* sub / description label (second label in the row) */
+row label:last-child {
+    color: var(--text-sub);
+    font-size: 11px;
+}
+
+row:selected label,
+row:focus label {
+    color: #e8ffd8;
+}
+
+row:selected label:last-child,
+row:focus label:last-child {
+    color: var(--accent);
+}
+
+/* ── Action bar at the bottom ─────────────────────────────── */
+actionbar,
+box.action-bar {
+    background-color: rgba(10, 20, 8, 0.95);
+    border-top: 1px solid var(--border);
+    border-radius: 0 0 12px 12px;
+    padding: 6px 10px;
+}
+
+actionbar button,
+box.action-bar button {
+    background-color: rgba(30, 60, 24, 0.6);
+    color: var(--text-sub);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-family: "JetBrains Mono", monospace;
+}
+
+actionbar button:hover,
+box.action-bar button:hover {
+    background-color: var(--bg-hover);
+    color: var(--text);
+    border-color: var(--border-hi);
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+scrollbar {
+    background-color: transparent;
+    min-width: 4px;
+}
+
+scrollbar slider {
+    background-color: var(--border);
+    border-radius: 99px;
+    min-width: 4px;
+    min-height: 20px;
+}
+
+scrollbar slider:hover {
+    background-color: var(--text-sub);
+}

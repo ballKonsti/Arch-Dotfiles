@@ -1,10 +1,12 @@
-hl.window_rule({
-    -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
-
-    suppress_event = "maximize",
-})
+-- Disabled 2026-11-05: suppressing maximize for every app broke F11/web
+-- fullscreen (Chromium/Electron dropped out of fullscreen after ~2 s).
+-- hl.window_rule({
+--     -- Ignore maximize requests from all apps.
+--     name  = "suppress-maximize-events",
+--     match = { class = ".*" },
+--
+--     suppress_event = "maximize",
+-- })
 
 hl.window_rule({
     -- Fix some dragging issues with XWayland

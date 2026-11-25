@@ -21,6 +21,7 @@ with [Quickshell](https://quickshell.org).
 | [`nvim/`](nvim) | Neovim — transparent, Python-oriented. See its [README](nvim/README.md). |
 | [`btop/`](btop) | System monitor. |
 | [`fastfetch/`](fastfetch) | Fetch, with custom ASCII. |
+| [`walker/`](walker) | App launcher — config and themes (hills, notch, stormclouds). |
 | `shortcuts.txt` | Scratch notes on keybinds. |
 
 ## The notch
@@ -61,7 +62,7 @@ up.
 git clone git@github.com:ballKonsti/Arch-Dotfiles.git ~/hyprland-setup
 cd ~/hyprland-setup
 
-for d in btop dunst fastfetch hypr kitty nvim quickshell zed; do
+for d in btop dunst fastfetch hypr kitty nvim quickshell walker zed; do
     [ -e ~/.config/"$d" ] && mv ~/.config/"$d" ~/.config/"$d".bak
     ln -s "$PWD/$d" ~/.config/"$d"
 done

@@ -109,3 +109,56 @@ it starts immediately, so the content leaves before the box does.
 
 Tweak `config/Theme.qml` first — notch size, expanded size, corner radii
 and the whole palette live there.
+
+## Cadence launcher
+
+`Super+Shift+H` fills the focused monitor with a Fire-TV-style home screen
+(`modules/Cadence.qml`, tiles in `widgets/AppTile.qml`):
+
+* **Rows** along the bottom — *Your apps*, then suggested films and series:
+  Trending now, Popular movies, Popular series, Top on Netflix / Prime Video /
+  Disney+ / Max, Anime on Crunchyroll. Suggestions come from JustWatch's
+  public API (`services/Suggest.qml`, Austria, German titles, refreshed every
+  3 h) and only include titles that come with a subscription on a service
+  Cadence has an app for.
+* **Hero** above follows the focused tile: backdrop, title, year, genres,
+  runtime, age rating, IMDb score, description, and which service it's on.
+
+Keys: `↑ ↓` rows, `← →` tiles, `Enter` play/open, `R` reload suggestions,
+`Esc` close. The same over IPC, e.g. for a phone remote:
+
+    qs ipc call cadence toggle          # also: open, close
+    qs ipc call cadence press down      # up down left right select back home refresh
+
+Apps live in the `apps` array at the top of `Cadence.qml`.
+
+### Apps open inside Cadence
+
+Picking a title or an app opens it in Cadence's own app frame —
+`scripts/cadence-web.py` + `scripts/CadenceWeb.qml`, a small PySide6 /
+QtWebEngine host — not in Chromium. Titles open straight on their page
+(e.g. `netflix.com/title/…`). It has to be a separate process: QtWebEngine
+aborts inside Quickshell (*"Argument list is empty, the program name is not
+passed to QCoreApplication"*), which takes the whole shell down.
+
+* **Always fullscreen.** The page gets the whole screen and the notch steps
+  away until you leave Cadence. The host asks Hyprland for fullscreen itself
+  (by pid) — Qt's own request is ignored when it maps under the launcher, and
+  a fullscreen window rule didn't take.
+* **Controls tuck away.** Floating pills (Home, back/forward/reload, the app,
+  other open apps, Quit app) fade out after a couple of seconds; move the
+  mouse to the top edge or press `Ctrl+Space` to bring them back.
+* While a cold start loads, the launcher shows the app's splash instead of
+  flashing the desktop; it hands over once the frame is on screen
+  (`qs ipc call cadence handoff`).
+* Keys: `Ctrl+Esc` / `Alt+Home` home, `Alt+←/→` history, `F5` reload,
+  `Ctrl+W` quit the app. Everything else, Esc included, goes to the page.
+  Super+Q also just goes home.
+* Apps stay alive after you go home, so reopening one resumes it — playback
+  keeps going in the background until you quit the app.
+* Logins persist (`~/.local/share/cadence-web/`). YouTube uses a TV user agent
+  so `youtube.com/tv` serves the couch UI.
+* DRM (Netflix, Prime, Disney+, …) uses Chrome's Widevine from
+  `/opt/google/chrome` (the `google-chrome` package).
+
+Needs `qt6-webengine` and `pyside6`.

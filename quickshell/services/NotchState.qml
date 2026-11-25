@@ -14,14 +14,14 @@ Singleton {
 
     property var instances: []
 
+    // Reassign rather than push/splice: reading a `property var` array
+    // hands back a copy, so mutating it in place never reaches the property.
     function register(notch): void {
-        root.instances.push(notch);
+        root.instances = root.instances.concat([notch]);
     }
 
     function unregister(notch): void {
-        const i = root.instances.indexOf(notch);
-        if (i !== -1)
-            root.instances.splice(i, 1);
+        root.instances = root.instances.filter(n => n !== notch);
     }
 
     IpcHandler {

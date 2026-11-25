@@ -1,0 +1,23 @@
+/* ~/.config/walker/themes/notch/colors.css
+ * ------------------------------------------------------------------
+ * Generated from the active wallpaper's derived palette (same formula
+ * as quickshell's Theme.qml / ThemeState.qml). Regenerate whenever the
+ * wallpaper changes with:
+ *   python3 ~/.config/rofi/scripts/notch-colors.py   (values only, adapt)
+ * or just recompute by hand from ~/.local/state/quickshell/theme.json's
+ * active seed. Kept as its own file so style.css never has to touch
+ * these when the palette moves.
+ * ------------------------------------------------------------------ */
+
+@define-color notch-bg    #060607;
+@define-color surface     #121416;
+@define-color surface-hi  #212329;
+@define-color stroke      alpha(#ffffff, 0.10);
+@define-color stroke-soft alpha(#ffffff, 0.05);
+
+@define-color text     #ecedee;
+@define-color subtext  #a4a6ad;
+@define-color faint    #666970;
+
+@define-color accent   #abb8d9;
+@define-color accent2  #dccdbc;

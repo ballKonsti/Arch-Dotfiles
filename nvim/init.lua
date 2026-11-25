@@ -1,5 +1,5 @@
 -- ~/.config/nvim/init.lua
--- Clean, transparent Neovim setup for Python (Neovim 0.11+)
+-- Clean, transparent Neovim setup for Python, Laravel and JS/three.js (Neovim 0.11+)
 
 ---------------------------------------------------------------------------
 -- Options
@@ -28,12 +28,30 @@ o.splitbelow = true
 o.undofile = true
 o.updatetime = 250
 
--- Python-friendly indentation
+-- 4-space indentation (Python, PHP); web filetypes drop to 2 below
 o.expandtab = true
 o.shiftwidth = 4
 o.tabstop = 4
 o.softtabstop = 4
 o.smartindent = true
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {
+        "javascript", "javascriptreact", "typescript", "typescriptreact",
+        "html", "css", "scss", "json", "jsonc", "yaml", "vue",
+    },
+    callback = function()
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.tabstop = 2
+        vim.opt_local.softtabstop = 2
+    end,
+})
+
+-- Blade templates and shader files
+vim.filetype.add({
+    pattern = { [".*%.blade%.php"] = "blade" },
+    extension = { vs = "glsl", fs = "glsl", vert = "glsl", frag = "glsl", glsl = "glsl" },
+})
 
 ---------------------------------------------------------------------------
 -- Plugin manager (lazy.nvim)
@@ -77,7 +95,7 @@ require("lazy").setup({
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
             options = {
-                theme = "catppuccin",
+                theme = "catppuccin-nvim",
                 globalstatus = true,
                 component_separators = "",
                 section_separators = { left = "", right = "" },
@@ -101,11 +119,17 @@ require("lazy").setup({
         build = ":TSUpdate",
         config = function()
             require("nvim-treesitter").install({
-                "python", "lua", "vim", "vimdoc", "bash", "json", "yaml", "toml", "markdown",
+                "python", "lua", "vim", "vimdoc", "bash", "json", "yaml", "toml",
+                "markdown", "markdown_inline", "regex", "sql", "dockerfile", "gitignore", "diff",
+                "php", "php_only", "phpdoc", "blade", "html", "css", "scss",
+                "javascript", "typescript", "tsx", "jsdoc", "glsl",
             })
             vim.api.nvim_create_autocmd("FileType", {
-                callback = function()
-                    pcall(vim.treesitter.start)
+                callback = function(ev)
+                    if pcall(vim.treesitter.start) and ev.match ~= "python" then
+                        -- treesitter indent is much better than smartindent for PHP/JS/HTML
+                        vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
                 end,
             })
         end,
@@ -117,9 +141,17 @@ require("lazy").setup({
         dependencies = {
             { "mason-org/mason.nvim", opts = { ui = { border = "rounded" } } },
             "neovim/nvim-lspconfig",
+            "b0o/SchemaStore.nvim",
         },
         config = function()
             vim.lsp.config("pyright", {
+                -- use the project's .venv when there is one
+                before_init = function(_, config)
+                    local py = config.root_dir and config.root_dir .. "/.venv/bin/python"
+                    if py and vim.uv.fs_stat(py) then
+                        config.settings.python.pythonPath = py
+                    end
+                end,
                 settings = {
                     pyright = { disableOrganizeImports = true }, -- ruff handles imports
                     python = { analysis = { typeCheckingMode = "basic" } },
@@ -128,10 +160,37 @@ require("lazy").setup({
             vim.lsp.config("lua_ls", {
                 settings = { Lua = { diagnostics = { globals = { "vim" } } } },
             })
+            vim.lsp.config("jsonls", {
+                settings = {
+                    json = { schemas = require("schemastore").json.schemas(), validate = { enable = true } },
+                },
+            })
+            -- HTML/emmet inside Blade templates too
+            vim.lsp.config("html", { filetypes = { "html", "blade" } })
+            vim.lsp.config("emmet_language_server", {
+                filetypes = {
+                    "html", "blade", "css", "scss", "javascriptreact", "typescriptreact", "vue",
+                },
+            })
             require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "ruff", "lua_ls" },
+                ensure_installed = {
+                    "pyright", "ruff", "lua_ls",
+                    "intelephense",    -- PHP / Laravel
+                    "ts_ls", "eslint", -- JS/TS (gsap, three)
+                    "html", "cssls", "jsonls", "emmet_language_server", "tailwindcss",
+                    "glsl_analyzer",   -- shaders
+                },
                 automatic_enable = true,
             })
+
+            -- Formatters (not LSPs, so mason-lspconfig doesn't install them)
+            local registry = require("mason-registry")
+            registry.refresh(function()
+                for _, name in ipairs({ "prettierd", "blade-formatter", "pint" }) do
+                    local ok, pkg = pcall(registry.get_package, name)
+                    if ok and not pkg:is_installed() then pkg:install() end
+                end
+            end)
         end,
     },
 
@@ -151,16 +210,29 @@ require("lazy").setup({
         },
     },
 
-    -- Formatting (ruff)
+    -- Formatting: ruff (python), pint (php), blade-formatter, prettier (web)
     {
         "stevearc/conform.nvim",
         event = "BufWritePre",
-        opts = {
-            formatters_by_ft = {
+        opts = function()
+            local prettier = { "prettierd", "prettier", stop_after_first = true }
+            local by_ft = {
                 python = { "ruff_organize_imports", "ruff_format" },
-            },
-            format_on_save = { timeout_ms = 1000, lsp_format = "fallback" },
-        },
+                php = { "pint" },
+                blade = { "blade-formatter" },
+            }
+            for _, ft in ipairs({
+                "javascript", "javascriptreact", "typescript", "typescriptreact", "vue",
+                "html", "css", "scss", "json", "jsonc", "yaml", "markdown",
+            }) do
+                by_ft[ft] = prettier
+            end
+            return {
+                formatters_by_ft = by_ft,
+                -- pint boots PHP on every save, so give it more headroom
+                format_on_save = { timeout_ms = 3000, lsp_format = "fallback" },
+            }
+        end,
     },
 
     -- Fuzzy finder
@@ -189,6 +261,7 @@ require("lazy").setup({
     { "lewis6991/gitsigns.nvim",             opts = {} },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl",          opts = { scope = { enabled = false } } },
     { "windwp/nvim-autopairs",               event = "InsertEnter", opts = {} },
+    { "windwp/nvim-ts-autotag",              event = "InsertEnter", opts = {} }, -- close/rename HTML & Blade tags
     { "folke/which-key.nvim",                event = "VeryLazy",    opts = { preset = "helix" } },
 }, {
     ui = { border = "rounded" },
@@ -198,12 +271,42 @@ require("lazy").setup({
 ---------------------------------------------------------------------------
 -- Extra transparency (covers plugins the theme might miss)
 ---------------------------------------------------------------------------
-for _, group in ipairs({
-    "Normal", "NormalNC", "NormalFloat", "FloatBorder", "SignColumn",
-    "StatusLine", "StatusLineNC", "TelescopeNormal", "TelescopeBorder",
-}) do
-    vim.api.nvim_set_hl(0, group, { bg = "none", fg = vim.api.nvim_get_hl(0, { name = group }).fg })
+local function clear_backgrounds()
+    for _, group in ipairs({
+        "Normal", "NormalNC", "NormalFloat", "FloatBorder", "SignColumn",
+        "StatusLine", "StatusLineNC", "TelescopeNormal", "TelescopeBorder",
+    }) do
+        vim.api.nvim_set_hl(0, group, { bg = "none", fg = vim.api.nvim_get_hl(0, { name = group }).fg })
+    end
 end
+clear_backgrounds()
+
+---------------------------------------------------------------------------
+-- :white / :dark  -> switch between light (latte) and transparent dark (mocha)
+---------------------------------------------------------------------------
+local function set_theme(light)
+    require("catppuccin").setup({
+        flavour = light and "latte" or "mocha",
+        transparent_background = not light,
+        float = { transparent = not light, solid = false },
+        integrations = {
+            blink_cmp = true,
+            gitsigns = true,
+            mason = true,
+            telescope = { enabled = true },
+            which_key = true,
+            indent_blankline = { enabled = true },
+        },
+    })
+    vim.o.background = light and "light" or "dark"
+    vim.cmd.colorscheme("catppuccin")
+    if not light then clear_backgrounds() end
+end
+vim.api.nvim_create_user_command("White", function() set_theme(true) end, { desc = "Light mode" })
+vim.api.nvim_create_user_command("Dark", function() set_theme(false) end, { desc = "Dark mode" })
+-- allow lowercase :white / :dark
+vim.cmd([[cnoreabbrev <expr> white getcmdtype() == ':' && getcmdline() ==# 'white' ? 'White' : 'white']])
+vim.cmd([[cnoreabbrev <expr> dark getcmdtype() == ':' && getcmdline() ==# 'dark' ? 'Dark' : 'dark']])
 
 ---------------------------------------------------------------------------
 -- Diagnostics
@@ -249,13 +352,78 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
--- Run the current Python file in a split terminal
+-- Run a command in a split terminal at the bottom
+local function term(cmd)
+    vim.cmd("botright split | resize 12 | terminal " .. cmd)
+end
+
+-- Run the current file (python uses the project's .venv when there is one)
+local runners = {
+    python = function()
+        local venv = vim.fs.root(0, ".venv")
+        return venv and venv .. "/.venv/bin/python" or "python3"
+    end,
+    javascript = function() return "node" end,
+    php = function() return "php" end,
+}
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "python",
+    pattern = vim.tbl_keys(runners),
     callback = function(ev)
         map("n", "<leader>r", function()
             vim.cmd("w")
-            vim.cmd("botright split | resize 12 | terminal python3 " .. vim.fn.shellescape(vim.fn.expand("%")))
-        end, { buffer = ev.buf, desc = "Run Python file" })
+            term(runners[ev.match]() .. " " .. vim.fn.shellescape(vim.fn.expand("%")))
+        end, { buffer = ev.buf, desc = "Run file" })
     end,
 })
+
+-- Laravel: run an artisan command from the project root
+map("n", "<leader>a", function()
+    local root = vim.fs.root(0, "artisan")
+    if not root then return vim.notify("Not in a Laravel project", vim.log.levels.WARN) end
+    vim.ui.input({ prompt = "artisan " }, function(args)
+        if args and args ~= "" then term("cd " .. vim.fn.shellescape(root) .. " && php artisan " .. args) end
+    end)
+end, { desc = "Artisan command" })
+
+-- Project dev server (vite for gsap/three, or anything in package.json)
+map("n", "<leader>n", function() term("npm run dev") end, { desc = "npm run dev" })
+
+---------------------------------------------------------------------------
+-- Zoom: Ctrl +  /  Ctrl -  /  Ctrl 0   (GUI only: Neovide, nvim-qt, ...)
+-- In a plain terminal, use the terminal emulator's own zoom instead.
+---------------------------------------------------------------------------
+local font_family = "JetBrainsMono Nerd Font" -- change to your font
+local default_size = 14
+local font_size = default_size
+
+if not vim.g.neovide then
+    vim.o.guifont = font_family .. ":h" .. font_size
+end
+
+local function zoom(delta)
+    if vim.g.neovide then
+        -- Neovide scales everything smoothly
+        local scale = (vim.g.neovide_scale_factor or 1.0) * (delta > 0 and 1.1 or 1 / 1.1)
+        vim.g.neovide_scale_factor = math.min(math.max(scale, 0.4), 5.0)
+    else
+        font_size = math.min(math.max(font_size + delta, 6), 48)
+        vim.o.guifont = font_family .. ":h" .. font_size
+    end
+end
+
+local function zoom_reset()
+    if vim.g.neovide then
+        vim.g.neovide_scale_factor = 1.0
+    else
+        font_size = default_size
+        vim.o.guifont = font_family .. ":h" .. font_size
+    end
+end
+
+for _, key in ipairs({ "<C-+>", "<C-=>", "<C-ScrollWheelUp>" }) do
+    map({ "n", "v", "i" }, key, function() zoom(1) end, { desc = "Zoom in" })
+end
+for _, key in ipairs({ "<C-->", "<C-ScrollWheelDown>" }) do
+    map({ "n", "v", "i" }, key, function() zoom(-1) end, { desc = "Zoom out" })
+end
+map({ "n", "v", "i" }, "<C-0>", zoom_reset, { desc = "Reset zoom" })

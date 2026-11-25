@@ -9,3 +9,5 @@ require("input")
 require("looknfeel")
 require("space")
 require("binds")
+require("touch")
+-- require("beamer")  -- disabled; uncomment to re-enable hdmi-beamer

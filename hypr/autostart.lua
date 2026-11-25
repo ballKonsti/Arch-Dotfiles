@@ -1,8 +1,14 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("/usr/bin/awww-daemon")
+    -- touch/drag-reactive water wallpaper (needs awww running first to read the image)
+    hl.exec_cmd("sh -c 'sleep 2; ~/.local/bin/water-wallpaper'")
     hl.exec_cmd("elephant")
+    hl.exec_cmd("walker --gapplication-service")
     hl.exec_cmd("hyprlock")
     hl.exec_cmd("dunst")
+
+    -- KDE Connect (phone link: files, clipboard, notifications)
+    hl.exec_cmd("kdeconnectd")
 
     -- Notch bar (Quickshell)
     hl.exec_cmd("qs -d")
